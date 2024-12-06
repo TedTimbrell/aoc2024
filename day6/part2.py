@@ -8,7 +8,7 @@ from part1 import (
 )
 
 
-def is_loop(guard_map, current_location):
+def is_loop(guard_map):
     current_direction = 0
     visited = set()
     current_loc = get_guard_start(guard_map)
@@ -29,7 +29,6 @@ def is_loop(guard_map, current_location):
 
 def main():
     guard_map = load_map()
-    # print(guard_map)
     guard_start = get_guard_start(guard_map)
     locations = get_locations(guard_map)
     # we can't place an obstruction in the guard's current location
@@ -38,7 +37,7 @@ def main():
     for location in locations:
         guard_map[location[0]][location[1]] = "#"
 
-        if is_loop(guard_map, guard_start):
+        if is_loop(guard_map):
             total += 1
         guard_map[location[0]][location[1]] = "."
 
