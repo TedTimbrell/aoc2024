@@ -2,7 +2,7 @@ DIRECTIONS = [(-1, 0), (0, 1), (1, 0), (0, -1)]
 
 
 def load_map():
-    with open("day6/input.txt", "r", encoding="utf-8") as f:
+    with open("day6/test_input.txt", "r", encoding="utf-8") as f:
         return [list(line.strip("\n ")) for line in f.readlines()]
 
 
