@@ -32,6 +32,9 @@ def disk_from_blocks(blocks):
 def main():
     rep = load_input()
     blocks = create_blocks(rep)
+    from collections import Counter
+
+    print(Counter((b.length for b in blocks if b.idx is None)))
     reversed_blocks = list(reversed(blocks))
     start_idx = 0
     def_to_delete = []
