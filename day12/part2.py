@@ -1,6 +1,3 @@
-from collections import Counter
-
-
 def load_input():
     with open("day12/input.txt", "r", encoding="utf-8") as f:
         return [line.strip("\n ") for line in f.readlines()]
@@ -22,7 +19,7 @@ def main():
         sides = 0
         area = 0
         pieces = [(row, col)]
-        pos_side_counts = Counter()
+        edges = set()
         while pieces:
             r, c = pieces.pop()
             area += 1
@@ -39,27 +36,18 @@ def main():
                         pieces.append((nrow, ncol))
                         seen.add((nrow, ncol))
                 else:
-                    pos_side_counts[(r, c, (rdiff, cdiff))] += 1
-
+                    edges.add((r, c, (rdiff, cdiff)))
         sides = 0
-        while pos_side_counts:
-            key = next(iter(pos_side_counts.keys()))
-            pos_side_counts[key] -= 1
-            if pos_side_counts[key] == 0:
-                del pos_side_counts[key]
+        while edges:
+            key = edges.pop()
             r, c, (diff) = key
             sides += 1
             for rdiff, cdiff in _DIRECTION_MAPPING[diff]:
                 idx = 1
-                while (
-                    pos := (r + rdiff * idx, c + cdiff * idx, diff)
-                ) in pos_side_counts:
+                while (pos := (r + rdiff * idx, c + cdiff * idx, diff)) in edges:
                     idx += 1
-                    pos_side_counts[pos] -= 1
-                    if pos_side_counts[pos] == 0:
-                        del pos_side_counts[pos]
+                    edges.remove(pos)
 
-        print(area, sides)
         return area * sides
 
     cost = 0
